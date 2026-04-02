@@ -43,7 +43,7 @@
             </div>
             <div class="transaction-right">
                 <span class="amount {{ t.type }}">
-                    {{ '+' if t.type == 'income' else '-' }}{{ "%.2f"|format(t.amount) }} zł
+                    {{ '+' if t.type == 'income' else '-' }}{{ "%.2f"|format(t.amount) }} $
                 </span>
                 <div class="actions">
                     <a href="/transactions/edit/{{ t.id }}">✏️</a>

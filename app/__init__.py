@@ -50,4 +50,7 @@ def create_app():
             db.session.add_all(default_categories)
             db.session.commit()
 
+    from app.budgets import budgets_bp
+    app.register_blueprint(budgets_bp)
+
     return app

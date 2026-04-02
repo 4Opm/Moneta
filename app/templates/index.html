@@ -12,15 +12,15 @@
     <div class="summary-cards">
         <div class="card income">
             <span>Monthly Income</span>
-            <strong>+{{ "%.2f"|format(monthly_income) }} zł</strong>
+            <strong>+{{ "%.2f"|format(monthly_income) }} $</strong>
         </div>
         <div class="card expense">
             <span>Monthly Expenses</span>
-            <strong>-{{ "%.2f"|format(monthly_expense) }} zł</strong>
+            <strong>-{{ "%.2f"|format(monthly_expense) }} $</strong>
         </div>
         <div class="card balance">
             <span>Balance</span>
-            <strong>{{ "%.2f"|format(monthly_balance) }} zł</strong>
+            <strong>{{ "%.2f"|format(monthly_balance) }} $</strong>
         </div>
     </div>
 
@@ -52,7 +52,7 @@
             </div>
             <div class="transaction-right">
                 <span class="amount {{ t.type }}">
-                    {{ '+' if t.type == 'income' else '-' }}{{ "%.2f"|format(t.amount) }} zł
+                    {{ '+' if t.type == 'income' else '-' }}{{ "%.2f"|format(t.amount) }} $
                 </span>
             </div>
         </div>

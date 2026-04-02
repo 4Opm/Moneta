@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Budgets — Moneta{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Budgets</h2>
+        <a href="/budgets/add" class="btn btn-primary">+ Add Budget</a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="budgets-list">
+        {% for item in budgets_with_spending %}
+        <div class="budget-card">
+            <div class="budget-header">
+                <div class="budget-title">
+                    <span class="icon">{{ item.budget.category.icon if item.budget.category else '📦' }}</span>
+                    <div>
+                        <strong>{{ item.budget.category.name if item.budget.category else 'No category' }}</strong>
+                        <small>{{ month_names[item.budget.month - 1] }} {{ item.budget.year }}</small>
+                    </div>
+                </div>
+                <div class="budget-amounts">
+                    <span class="{{ 'over-budget' if item.remaining < 0 else 'under-budget' }}">
+                        {{ "%.2f"|format(item.spent) }} $ / {{ "%.2f"|format(item.budget.limit_amount) }} $
+                    </span>
+                    <form method="POST" action="/budgets/delete/{{ item.budget.id }}" style="display:inline">
+                        <button type="submit" onclick="return confirm('Delete this budget?')">🗑️</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar {{ 'danger' if item.percentage >= 90 else 'warning' if item.percentage >= 70 else 'good' }}"
+                     style="width: {{ item.percentage }}%">
+                </div>
+            </div>
+
+            <div class="budget-footer">
+                <small>{{ item.percentage }}% used</small>
+                <small class="{{ 'over-budget' if item.remaining < 0 else '' }}">
+                    {% if item.remaining >= 0 %}
+                        {{ "%.2f"|format(item.remaining) }} $ remaining
+                    {% else %}
+                        {{ "%.2f"|format(item.remaining * -1) }} $ over budget!
+                    {% endif %}
+                </small>
+            </div>
+        </div>
+        {% else %}
+        <p class="empty">No budgets yet. <a href="/budgets/add">Add your first one!</a></p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

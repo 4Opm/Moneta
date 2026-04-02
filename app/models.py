@@ -62,6 +62,7 @@ class Budget(db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'))
+    category = db.relationship('Category', backref='budgets')
 
     def __repr__(self):
         return f'<Budget {self.limit_amount} {self.month}/{self.year}>'
