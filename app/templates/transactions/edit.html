@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Edit transaction — Moneta{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Edit transaction</h2>
+        <a href="/transactions" class="btn">← Back</a>
+    </div>
+
+    <form method="POST" action="/transactions/edit/{{ transaction.id }}" class="form-card">
+        <div class="form-group">
+            <label>Typ</label>
+            <select name="type" required>
+                <option value="expense" {{ 'selected' if transaction.type == 'expense' }}>💸 Expense</option>
+                <option value="income" {{ 'selected' if transaction.type == 'income' }}>💵 Income</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Amount ($)</label>
+            <input type="number" name="amount" step="0.01" value="{{ transaction.amount }}" required>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="description" value="{{ transaction.description or '' }}">
+        </div>
+        <div class="form-group">
+            <label>Data</label>
+            <input type="date" name="date" value="{{ transaction.date.strftime('%Y-%m-%d') }}">
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select name="category_id">
+                <option value="">No category</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {{ 'selected' if transaction.category_id == category.id }}>
+                    {{ category.icon }} {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Save your changes</button>
+    </form>
+</div>
+{% endblock %}

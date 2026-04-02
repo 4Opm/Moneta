@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Dodaj transakcję — Moneta{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Add a transaction</h2>
+        <a href="/transactions" class="btn">← Wróć</a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="/transactions/add" class="form-card">
+        <div class="form-group">
+            <label>Typ</label>
+            <select name="type" required>
+                <option value="expense">💸 Expense</option>
+                <option value="income">💵 Income</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Amount ($)</label>
+            <input type="number" name="amount" step="0.01" min="0.01" placeholder="0.00" required>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" name="description" placeholder="e.g. Shopping at Biedronka">
+        </div>
+        <div class="form-group">
+            <label>Data</label>
+            <input type="date" name="date">
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <select name="category_id">
+                <option value="">No category</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.icon }} {{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Add a transaction</button>
+    </form>
+</div>
+{% endblock %}

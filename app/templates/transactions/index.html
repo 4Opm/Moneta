@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Transakcje — Moneta{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h2>Transactions</h2>
+        <a href="/transactions/add" class="btn btn-primary">+ Add transactions</a>
+    </div>
+
+    <div class="summary-cards">
+        <div class="card income">
+            <span>Revenues</span>
+            <strong>{{ "%.2f"|format(total_income) }} $</strong>
+        </div>
+        <div class="card expense">
+            <span>Expenses</span>
+            <strong>{{ "%.2f"|format(total_expense) }} $</strong>
+        </div>
+        <div class="card balance">
+            <span>Balance</span>
+            <strong>{{ "%.2f"|format(balance) }} $</strong>
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="transactions-list">
+        {% for t in transactions %}
+        <div class="transaction-item {{ t.type }}">
+            <div class="transaction-left">
+                <span class="icon">{{ t.category.icon if t.category else '📦' }}</span>
+                <div>
+                    <strong>{{ t.description or 'No description available' }}</strong>
+                    <small>{{ t.date.strftime('%d.%m.%Y') }} • {{ t.category.name if t.category else 'No category' }}</small>
+                </div>
+            </div>
+            <div class="transaction-right">
+                <span class="amount {{ t.type }}">
+                    {{ '+' if t.type == 'income' else '-' }}{{ "%.2f"|format(t.amount) }} zł
+                </span>
+                <div class="actions">
+                    <a href="/transactions/edit/{{ t.id }}">✏️</a>
+                    <form method="POST" action="/transactions/delete/{{ t.id }}" style="display:inline">
+                        <button type="submit" onclick="return confirm('Delete this transaction?')">🗑️</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="empty">No transaction. <a href="/transactions/add">Add first!</a></p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

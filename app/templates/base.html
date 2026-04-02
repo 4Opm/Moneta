@@ -8,7 +8,19 @@
 </head>
 <body>
     <nav>
-        <h1>💰 Moneta</h1>
+        <h1><a href="/" style="color:white; text-decoration:none;">💰 Moneta</a></h1>
+        {% if current_user.is_authenticated %}
+            <div class="nav-links">
+                <a href="/transactions">Transactions</a>
+                <span>{{ current_user.username }}</span>
+                <a href="/logout">Log out</a>
+            </div>
+        {% else %}
+            <div class="nav-links">
+                <a href="/login">Log in</a>
+                <a href="/register">Sing up</a>
+            </div>
+        {% endif %}
     </nav>
 
     <main>

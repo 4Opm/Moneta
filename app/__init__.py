@@ -29,4 +29,25 @@ def create_app():
     from app.auth import auth
     app.register_blueprint(auth)
 
+    from app.transactions import transactions_bp
+    app.register_blueprint(transactions_bp)
+
+    with app.app_context():
+        db.create_all()
+        
+        from app.models import Category
+        if Category.query.count() == 0:
+            default_categories = [
+                Category(name='Food & Drinks', color='#e74c3c', icon='🍔'),
+                Category(name='Transport', color='#3498db', icon='🚗'),
+                Category(name='Housing', color='#2ecc71', icon='🏠'),
+                Category(name='Entertainment', color='#9b59b6', icon='🎮'),
+                Category(name='Health', color='#1abc9c', icon='💊'),
+                Category(name='Clothing', color='#e67e22', icon='👕'),
+                Category(name='Savings', color='#f1c40f', icon='💰'),
+                Category(name='Other', color='#95a5a6', icon='📦'),
+            ]
+            db.session.add_all(default_categories)
+            db.session.commit()
+
     return app

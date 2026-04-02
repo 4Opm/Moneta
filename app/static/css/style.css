@@ -87,3 +87,118 @@ button[type="submit"]:hover {
 a { color: #2c3e50; }
 
 p { margin-top: 1rem; font-size: 0.9rem; }
+
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    border: 1px solid #2c3e50;
+    color: #2c3e50;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background-color: #2c3e50;
+    color: white !important;
+    border: none;
+    cursor: pointer;
+}
+
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.summary-cards .card {
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.summary-cards .card span { display: block; font-size: 0.85rem; opacity: 0.8; }
+.summary-cards .card strong { font-size: 1.4rem; }
+.summary-cards .card.income { background: #d4edda; color: #155724; }
+.summary-cards .card.expense { background: #f8d7da; color: #721c24; }
+.summary-cards .card.balance { background: #d1ecf1; color: #0c5460; }
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    border-left: 4px solid #ddd;
+}
+
+.transaction-item.income { border-left-color: #2ecc71; }
+.transaction-item.expense { border-left-color: #e74c3c; }
+
+.transaction-left { display: flex; align-items: center; gap: 1rem; }
+.transaction-left .icon { font-size: 1.5rem; }
+.transaction-left small { color: #777; display: block; font-size: 0.8rem; }
+
+.transaction-right { display: flex; align-items: center; gap: 1rem; }
+.amount.income { color: #2ecc71; font-weight: bold; }
+.amount.expense { color: #e74c3c; font-weight: bold; }
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.actions a,
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 0.3rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    line-height: 1;
+}
+
+.actions a:hover,
+.actions button:hover {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+.form-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.form-group select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.nav-links { display: flex; gap: 1rem; align-items: center; }
+.nav-links a { color: white; text-decoration: none; }
+.nav-links span { color: #bdc3c7; font-size: 0.9rem; }
+.empty { text-align: center; padding: 2rem; color: #777; }
