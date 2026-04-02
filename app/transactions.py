@@ -41,13 +41,13 @@ def add():
         category_id = request.form.get('category_id')
 
         if not amount or not type_:
-            flash('Kwota i typ transakcji są wymagane.', 'danger')
+            flash('Amount and transaction type are required.', 'danger')
             return redirect(url_for('transactions.add'))
         try:
             amount = float(amount)
             date = datetime.strptime(date_str, '%Y-%m-%d') if date_str else datetime.utcnow()
         except ValueError:
-            flash('Nieprawidłowa kwota lub data.', 'danger')
+            flash('Invalid amount or date.', 'danger')
             return redirect(url_for('transactions.add'))
         
         transaction = Transaction(
@@ -62,7 +62,7 @@ def add():
         db.session.add(transaction)
         db.session.commit()
 
-        flash('Transakcja dodana!', 'success')
+        flash('Transaction added!', 'success')
         return redirect(url_for('transactions.index'))
 
     return render_template('transactions/add.html', categories=categories)
@@ -90,7 +90,7 @@ def edit(id):
             transaction.date = datetime.strptime(date_str, '%Y-%m-%d')
 
         db.session.commit()
-        flash('Transakcja zaktualizowana!', 'success')
+        flash('Transaction updated!', 'success')
         return redirect(url_for('transactions.index'))
 
     return render_template('transactions/edit.html', transaction=transaction, categories=categories)
@@ -101,11 +101,11 @@ def delete(id):
     transaction = Transaction.query.get_or_404(id)
 
     if transaction.user_id != current_user.id:
-        flash('Nie masz dostępu do tej transakcji.', 'danger')
+        flash('Access denied.', 'danger')
         return redirect(url_for('transactions.index'))
 
     db.session.delete(transaction)
     db.session.commit()
 
-    flash('Transakcja usunięta.', 'info')
+    flash('Transaction deleted.', 'info')
     return redirect(url_for('transactions.index'))

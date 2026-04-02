@@ -14,11 +14,11 @@ def register():
         email = request.form.get('email')
         password = request.form.get('password')
         if User.query.filter_by(email=email).first():
-            flash('Ten email jest już zajęty.', 'danger')
+            flash('This email is already taken.', 'danger')
             return redirect(url_for('auth.register'))
 
         if User.query.filter_by(username=username).first():
-            flash('Ta nazwa użytkownika jest już zajęta.', 'danger')
+            flash('This username is already taken.', 'danger')
             return redirect(url_for('auth.register'))
         user = User(username=username, email=email)
         user.set_password(password)
